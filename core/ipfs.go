@@ -1,4 +1,4 @@
-package main
+package core
 
 import (
 	"context"
@@ -25,7 +25,7 @@ import (
 
 var flagExp = flag.Bool("experimental", false, "enable experimental features")
 
-func setupPlugins(externalPluginsPath string) error {
+func SetupPlugins(externalPluginsPath string) error {
 	// Load any external plugins if available on externalPluginsPath
 	plugins, err := loader.NewPluginLoader(filepath.Join(externalPluginsPath, "plugins"))
 	if err != nil {
@@ -44,7 +44,7 @@ func setupPlugins(externalPluginsPath string) error {
 	return nil
 }
 
-func createTempRepo() (string, error) {
+func CreateTempRepo() (string, error) {
 	repoPath, err := os.MkdirTemp("", "ipfs-shell")
 	if err != nil {
 		return "", fmt.Errorf("failed to get temp dir: %s", err)
@@ -83,7 +83,7 @@ func createTempRepo() (string, error) {
 }
 
 // Creates an IPFS node and returns its coreAPI
-func createNode(ctx context.Context, repoPath string) (*core.IpfsNode, error) {
+func CreateNode(ctx context.Context, repoPath string) (*core.IpfsNode, error) {
 	// Open the repo
 	repo, err := fsrepo.Open(repoPath)
 	if err != nil {
@@ -103,23 +103,25 @@ func createNode(ctx context.Context, repoPath string) (*core.IpfsNode, error) {
 
 var loadPluginsOnce sync.Once
 
-// Spawns a node to be used just for this run (i.e. creates a tmp repo)
-func spawnEphemeral(ctx context.Context) (icore.CoreAPI, *core.IpfsNode, error) {
+// Parses flags and spawns IPFS node
+func SpawnIpfsNode(ctx context.Context) (icore.CoreAPI, *core.IpfsNode, error) {
+	flag.Parse()
+
 	var onceErr error
 	loadPluginsOnce.Do(func() {
-		onceErr = setupPlugins("")
+		onceErr = SetupPlugins("")
 	})
 	if onceErr != nil {
 		return nil, nil, onceErr
 	}
 
 	// Create a Temporary Repo
-	repoPath, err := createTempRepo()
+	repoPath, err := CreateTempRepo()
 	if err != nil {
 		return nil, nil, fmt.Errorf("failed to create temp repo: %s", err)
 	}
 
-	node, err := createNode(ctx, repoPath)
+	node, err := CreateNode(ctx, repoPath)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -163,7 +165,7 @@ func ConnectToPeers(ctx context.Context, ipfs icore.CoreAPI, peers []string) err
 	return nil
 }
 
-func getUnixfsNode(path string) (files.Node, error) {
+func GetUnixfsNode(path string) (files.Node, error) {
 	st, err := os.Stat(path)
 	if err != nil {
 		return nil, err

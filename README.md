@@ -7,5 +7,5 @@ Faterium - a place where fates are forged.
 Run the following command to launch the server:
 
 ```sh
-go run ./... serve
+go run ./cmd serve
 ```
