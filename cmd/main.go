@@ -18,6 +18,8 @@ import (
 	ipfsPath "github.com/ipfs/interface-go-ipfs-core/path"
 
 	fateCore "github.com/faterium/faterium-server/core"
+
+	"github.com/aofei/mimesniffer"
 )
 
 func main() {
@@ -47,10 +49,8 @@ func launchPocketBase(app *fateCore.App) error {
 				if err != nil {
 					return err
 				}
-				ctVideo := "video/mp4, video/x-ms-wmv, video/quicktime, video/3gpp"
-				ctImage := "image/jpg, image/jpeg, image/png, image/svg+xml, image/gif"
-				contentType := ctVideo + ", " + ctImage
-				return c.Blob(200, contentType, file)
+				ct := mimesniffer.Sniff(file)
+				return c.Blob(200, ct, file)
 			},
 		})
 		return nil
