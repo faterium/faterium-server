@@ -9,6 +9,7 @@ import (
 	"github.com/labstack/echo/v5"
 	"github.com/pocketbase/pocketbase"
 	pbCore "github.com/pocketbase/pocketbase/core"
+	"github.com/spf13/cobra"
 
 	fateCore "github.com/faterium/faterium-server/core"
 
@@ -49,29 +50,51 @@ func launchPocketBase(app *fateCore.App) error {
 		})
 		return nil
 	})
-	pbApp.OnFileDownloadRequest().Add(func(e *pbCore.FileDownloadEvent) error {
-		log.Println(e.ServedPath)
+	pbApp.OnRecordBeforeCreateRequest().Add(func(e *pbCore.RecordCreateEvent) error {
+		collectionName := e.Record.Collection().Name
+		if collectionName != "images" {
+			return nil
+		}
+		form, err := e.HttpContext.MultipartForm()
+		if err != nil {
+			return err
+		}
+		mapFile := form.File["file"][0]
+		if mapFile == nil {
+			return fmt.Errorf("invalid request file")
+		}
+		file, err := mapFile.Open()
+		if err != nil {
+			return err
+		}
+		res, err := fateCore.AddBytesToIpfs(e.HttpContext.Request().Context(), app, file)
+		if err != nil {
+			return err
+		}
+		// Update Record cid field with the actual IPFS CID of the file
+		e.Record.SetDataValue("cid", res.Cid().String())
 		return nil
+	})
+	pbApp.RootCmd.AddCommand(&cobra.Command{
+		Use: "syncIpfs",
+		Run: func(command *cobra.Command, args []string) {
+			// The following line used only if you need to forcefully add
+			// files to the IPFS for testing or any other purpose
+			fateCore.AddFilesToIpfs(command.Context(), app, "./data/pb/storage/")
+		},
 	})
 	return pbApp.Start()
 }
 
 // Getting a IPFS node running
 func launchIpfs(app *fateCore.App) error {
-	ctx, cancel := context.WithCancel(context.Background())
-	defer cancel()
-
 	// Spawn a local peer using a specific repo path
 	repoPath := "./data/ipfs/"
-	ipfsApi, ipfsNode, err := fateCore.SpawnIpfsNode(ctx, &repoPath)
+	ipfsApi, ipfsNode, err := fateCore.SpawnIpfsNode(context.Background(), &repoPath)
 	if err != nil {
-		panic(fmt.Errorf("failed to spawn peer node: %s", err))
+		return fmt.Errorf("failed to spawn peer node: %s", err)
 	}
 	app.IpfsApi = ipfsApi
 	app.IpfsNode = ipfsNode
-
-	// Uncomment the following line, only if you need to forcefully add
-	// files to the IPFS for testing or any other purpose
-	// fateCore.AddFilesToIpfs(ctx, app, "./data/pb/storage/")
 	return nil
 }

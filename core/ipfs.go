@@ -47,8 +47,10 @@ func SetupPlugins(externalPluginsPath string) error {
 }
 
 func CreateRepo(path *string) (string, error) {
-	repoPath := *path
-	if path == nil {
+	var repoPath string
+	if path != nil {
+		repoPath = *path
+	} else {
 		var err error
 		repoPath, err = os.MkdirTemp("", "ipfs-shell")
 		if err != nil {
@@ -236,6 +238,20 @@ func AddFileToIpfs(ctx context.Context, app *App, inputPath string) (ipfsPath.Re
 		return nil, fmt.Errorf("could not get File: %s", err)
 	}
 	cid, err := app.IpfsApi.Unixfs().Add(ctx, inputNode)
+	if err != nil {
+		return nil, fmt.Errorf("could not add Directory: %s", err)
+	}
+	return cid, nil
+}
+
+// Add a file or a directory to IPFS
+func AddBytesToIpfs(ctx context.Context, app *App, src io.Reader) (ipfsPath.Resolved, error) {
+	buf := new(bytes.Buffer)
+	_, err := io.Copy(buf, src)
+	if err != nil {
+		return nil, err
+	}
+	cid, err := app.IpfsApi.Unixfs().Add(ctx, files.NewBytesFile(buf.Bytes()))
 	if err != nil {
 		return nil, fmt.Errorf("could not add Directory: %s", err)
 	}
