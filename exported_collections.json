@@ -1,0 +1,215 @@
+[
+    {
+        "id": "systemprofiles0",
+        "name": "profiles",
+        "system": true,
+        "listRule": "userId = @request.user.id",
+        "viewRule": "userId = @request.user.id",
+        "createRule": "userId = @request.user.id",
+        "updateRule": "userId = @request.user.id",
+        "deleteRule": null,
+        "schema": [
+            {
+                "id": "pbfielduser",
+                "name": "userId",
+                "type": "user",
+                "system": true,
+                "required": true,
+                "unique": true,
+                "options": {
+                    "maxSelect": 1,
+                    "cascadeDelete": true
+                }
+            },
+            {
+                "id": "pbfieldname",
+                "name": "name",
+                "type": "text",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "pbfieldavatar",
+                "name": "avatar",
+                "type": "file",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "maxSelect": 1,
+                    "maxSize": 5242880,
+                    "mimeTypes": [
+                        "image/jpg",
+                        "image/jpeg",
+                        "image/png",
+                        "image/svg+xml",
+                        "image/gif"
+                    ],
+                    "thumbs": null
+                }
+            }
+        ]
+    },
+    {
+        "id": "vphxcdao76248j8",
+        "name": "polls",
+        "system": false,
+        "listRule": null,
+        "viewRule": null,
+        "createRule": null,
+        "updateRule": null,
+        "deleteRule": null,
+        "schema": [
+            {
+                "id": "ghbzmikj",
+                "name": "title",
+                "type": "text",
+                "system": false,
+                "required": true,
+                "unique": false,
+                "options": {
+                    "min": 1,
+                    "max": 100,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "b8ftksgb",
+                "name": "body",
+                "type": "text",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": 1000,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "egu4igyf",
+                "name": "options",
+                "type": "json",
+                "system": false,
+                "required": true,
+                "unique": false,
+                "options": {}
+            },
+            {
+                "id": "rn1s8rpw",
+                "name": "chain",
+                "type": "select",
+                "system": false,
+                "required": true,
+                "unique": false,
+                "options": {
+                    "maxSelect": 1,
+                    "values": [
+                        "Faterium"
+                    ]
+                }
+            },
+            {
+                "id": "cinvjg3z",
+                "name": "start_at",
+                "type": "date",
+                "system": false,
+                "required": true,
+                "unique": false,
+                "options": {
+                    "min": "",
+                    "max": ""
+                }
+            },
+            {
+                "id": "2tbznbkd",
+                "name": "end_at",
+                "type": "date",
+                "system": false,
+                "required": true,
+                "unique": false,
+                "options": {
+                    "min": "",
+                    "max": ""
+                }
+            },
+            {
+                "id": "ut34v3p0",
+                "name": "image_cid",
+                "type": "text",
+                "system": false,
+                "required": true,
+                "unique": false,
+                "options": {
+                    "min": 46,
+                    "max": 59,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "mdcccju5",
+                "name": "cid",
+                "type": "text",
+                "system": false,
+                "required": true,
+                "unique": true,
+                "options": {
+                    "min": 46,
+                    "max": 59,
+                    "pattern": ""
+                }
+            }
+        ]
+    },
+    {
+        "id": "s68ngp7zdhksmrk",
+        "name": "images",
+        "system": false,
+        "listRule": null,
+        "viewRule": null,
+        "createRule": null,
+        "updateRule": null,
+        "deleteRule": null,
+        "schema": [
+            {
+                "id": "0rkgvdqt",
+                "name": "cid",
+                "type": "text",
+                "system": false,
+                "required": false,
+                "unique": true,
+                "options": {
+                    "min": 46,
+                    "max": 59,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "au5hpcb5",
+                "name": "file",
+                "type": "file",
+                "system": false,
+                "required": true,
+                "unique": false,
+                "options": {
+                    "maxSelect": 1,
+                    "maxSize": 10485760,
+                    "mimeTypes": [
+                        "image/jpg",
+                        "image/jpeg",
+                        "image/png",
+                        "image/svg+xml",
+                        "image/gif"
+                    ],
+                    "thumbs": []
+                }
+            }
+        ]
+    }
+]

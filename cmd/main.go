@@ -30,9 +30,10 @@ func main() {
 }
 
 func launchPocketBase(app *fateCore.App) error {
+	dataDirPath := "./data/pb/"
 	pbApp := pocketbase.NewWithConfig(pocketbase.Config{
 		DefaultDebug:   false,
-		DefaultDataDir: "./data/pb",
+		DefaultDataDir: dataDirPath,
 	})
 	pbApp.OnBeforeServe().Add(func(e *pbCore.ServeEvent) error {
 		e.Router.AddRoute(echo.Route{
@@ -80,7 +81,7 @@ func launchPocketBase(app *fateCore.App) error {
 		Run: func(command *cobra.Command, args []string) {
 			// The following line used only if you need to forcefully add
 			// files to the IPFS for testing or any other purpose
-			fateCore.AddFilesToIpfs(command.Context(), app, "./data/pb/storage/")
+			fateCore.AddFilesToIpfs(command.Context(), app, dataDirPath+"storage/")
 		},
 	})
 	return pbApp.Start()
