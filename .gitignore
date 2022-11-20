@@ -44,8 +44,5 @@ go.work
 .history
 .ionide
 
-# PocketBase folders
-/pb_data
-
-# IPFS
-/ipfs
+# PocketBase and IPFS data folders
+/data
