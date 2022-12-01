@@ -30,23 +30,10 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       # the acme.json file is required by Let's Encrypt
       - ./acme.json:/etc/traefik/acme/acme.json
-    # labels:
-    #   # expose dashboard
-    #   - traefik.enable=true
-    #   # http
-    #   - traefik.http.routers.dashboard-http.entrypoints=web
-    #   - traefik.http.routers.dashboard-http.rule=Host(`localhost`) && Path(`/dashboard`)
-    #   - traefik.http.routers.dashboard-http.service=api@internal
-    #   # https
-    #   - traefik.http.routers.dashboard.entrypoints=websecure
-    #   - traefik.http.routers.dashboard.rule=Host(`dapi.faterium.com`) && Path(`/dashboard`)
-    #   - traefik.http.routers.dashboard.tls=true
-    #   - traefik.http.routers.dashboard.tls.certresolver=letsencrypt
-    #   - traefik.http.routers.dashboard.service=api@internal
 
   server:
     image: ghcr.io/faterium/faterium-server:latest
-    command: serve --http=0.0.0.0:8090 --https=dapi.faterium.com:443
+    command: serve --http=0.0.0.0:8090
     volumes:
       - ../data:/data
     labels:
