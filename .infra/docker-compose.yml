@@ -11,7 +11,18 @@ services:
     command:
       - --providers.docker
       - --providers.docker.exposedByDefault=false
+      - --api.dashboard=true
+      # the entrypoints we ant to expose
       - --entrypoints.web.address=:80
+      - --entrypoints.websecure.address=:443
+      # enable ACME (Let's Encrypt): automatic SSL
+      - --certificatesresolvers.letsencrypt.acme.email=support@faterium.com
+      - --certificatesresolvers.letsencrypt.acme.storage=/etc/traefik/acme/acme.json
+      - --certificatesresolvers.letsencrypt.acme.httpchallenge=true
+      - --certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web
+      # global redirect to https
+      - --entrypoints.web.http.redirections.entryPoint.to=websecure
+      - --entrypoints.web.http.redirections.entryPoint.scheme=https
     ports:
       - 80:80
       - 443:443
@@ -19,6 +30,19 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       # the acme.json file is required by Let's Encrypt
       - ./acme.json:/etc/traefik/acme/acme.json
+    labels:
+      # expose dashboard
+      - traefik.enable=true
+      # http
+      - traefik.http.routers.dashboard-http.entrypoints=web
+      - traefik.http.routers.dashboard-http.rule=Host(`dapi.faterium.com`) || Host(`localhost`)
+      - traefik.http.routers.dashboard-http.service=api@internal
+      # https
+      - traefik.http.routers.dashboard.entrypoints=websecure
+      - traefik.http.routers.dashboard.rule=Host(`dapi.faterium.com`)
+      - traefik.http.routers.dashboard.tls=true
+      - traefik.http.routers.dashboard.tls.certresolver=letsencrypt
+      - traefik.http.routers.dashboard.service=api@internal
 
   server:
     image: ghcr.io/faterium/faterium-server:latest
