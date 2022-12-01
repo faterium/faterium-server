@@ -73,15 +73,18 @@ services:
       - traefik.http.services.node.loadbalancer.server.port=9944
 
   apps:
-    image: jacogr/polkadot-js-apps
+    image: jacogr/polkadot-js-apps:latest
     environment:
       - WS_URL=wss://dapi.faterium.com/wss
     labels:
       - traefik.enable=true
+      - traefik.http.middlewares.site-delete-path.replacepath.path=
       # http
+      - traefik.http.routers.apps-http.middlewares=site-delete-path
       - traefik.http.routers.apps-http.entrypoints=web
       - traefik.http.routers.apps-http.rule=Host(`localhost`) && Path(`/apps`)
       # https
+      - traefik.http.routers.apps.middlewares=site-delete-path
       - traefik.http.routers.apps.entrypoints=websecure
       - traefik.http.routers.apps.rule=Host(`dapi.faterium.com`) && Path(`/apps`)
       - traefik.http.routers.apps.tls=true
