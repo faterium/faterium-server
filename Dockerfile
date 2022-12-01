@@ -1,4 +1,4 @@
-FROM golang:1.19-alpine
+FROM golang:1.19-alpine as builder
 
 WORKDIR /app
 
@@ -9,6 +9,10 @@ COPY go.sum go.sum
 COPY cmd cmd
 COPY core core
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o ./release ./cmd/main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix nocgo -o /release ./cmd/main.go
 
-ENTRYPOINT ["./release"]
+# Final stage
+FROM scratch
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+COPY --from=builder /release .
+ENTRYPOINT ["/release"]

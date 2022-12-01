@@ -17,13 +17,22 @@ services:
       # The acme.json file is required by Let's Encrypt
       - ./acme.json:/etc/traefik/acme/acme.json
 
-  server:
-    image: ghcr.io/faterium/faterium-server:latest
-    command: serve --http=0.0.0.0:8090 --dir=/pb
-    volumes:
-      - ../data/pb:/pb
+  # server:
+  #   image: ghcr.io/faterium/faterium-server:latest
+  #   command: serve --http=0.0.0.0:8090
+  #   volumes:
+  #     - ../data:./data
+  #   labels:
+  #     - "traefik.enable=true"
+  #     # - "traefik.http.routers.server.rule=Host(`localhost`)"
+  #     - "traefik.http.routers.server.entrypoints=web"
+  #     - "traefik.http.services.server.loadbalancer.server.port=8090"
+
+  node:
+    image: ghcr.io/faterium/faterium-node:latest
+    command: --dev
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.server.rule=Host(`localhost`)"
-      - "traefik.http.routers.server.entrypoints=web"
-      - "traefik.http.services.server.loadbalancer.server.port=8090"
+      - "traefik.http.routers.node.rule=Host(`localhost`)"
+      - "traefik.http.routers.node.entrypoints=web"
+      - "traefik.http.services.node.loadbalancer.server.port=8090"
