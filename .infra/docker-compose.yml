@@ -35,7 +35,7 @@ services:
       - traefik.enable=true
       # http
       - traefik.http.routers.dashboard-http.entrypoints=web
-      - traefik.http.routers.dashboard-http.rule=Host(`dapi.faterium.com`) || Host(`localhost`)
+      - traefik.http.routers.dashboard-http.rule=Host(`localhost`)
       - traefik.http.routers.dashboard-http.service=api@internal
       # https
       - traefik.http.routers.dashboard.entrypoints=websecure
@@ -51,8 +51,14 @@ services:
       - ../data:/data
     labels:
       - traefik.enable=true
-      - traefik.http.routers.server.rule=Host(`dapi.faterium.com`) || Host(`localhost`)
-      - traefik.http.routers.server.entrypoints=web
+      # http
+      - traefik.http.routers.server-http.entrypoints=web
+      - traefik.http.routers.server-http.rule=Host(`localhost`)
+      # https
+      - traefik.http.routers.server.entrypoints=websecure
+      - traefik.http.routers.server.rule=Host(`dapi.faterium.com`)
+      - traefik.http.routers.server.tls=true
+      - traefik.http.routers.server.tls.certresolver=letsencrypt
       # backend port
       - traefik.http.services.server.loadbalancer.server.port=8090
 
@@ -63,9 +69,18 @@ services:
       - --ws-external
       - --rpc-external
       - --rpc-cors=all
+      - --base-path=/data/
+    volumes:
+      - ../data:/data
     labels:
       - traefik.enable=true
-      - traefik.http.routers.node.rule=(Host(`dapi.faterium.com`) && Path(`/wss`)) || (Host(`localhost`) && Path(`/wss`))
-      - traefik.http.routers.node.entrypoints=web
+      # http
+      - traefik.http.routers.node-http.entrypoints=web
+      - traefik.http.routers.node-http.rule=Host(`localhost`) && Path(`/ws`)
+      # https
+      - traefik.http.routers.node.entrypoints=websecure
+      - traefik.http.routers.node.rule=Host(`dapi.faterium.com`) && Path(`/wss`)
+      - traefik.http.routers.node.tls=true
+      - traefik.http.routers.node.tls.certresolver=letsencrypt
       # backend port
       - traefik.http.services.node.loadbalancer.server.port=9944
