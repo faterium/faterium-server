@@ -1,4 +1,9 @@
-version: '3'
+version: "3.8"
+
+networks:
+  default:
+    internal: false
+    name: reverse-proxy
 
 services:
   reverse-proxy:
@@ -17,22 +22,22 @@ services:
       # The acme.json file is required by Let's Encrypt
       - ./acme.json:/etc/traefik/acme/acme.json
 
-  # server:
-  #   image: ghcr.io/faterium/faterium-server:latest
-  #   command: serve --http=0.0.0.0:8090
-  #   volumes:
-  #     - ../data:./data
-  #   labels:
-  #     - "traefik.enable=true"
-  #     # - "traefik.http.routers.server.rule=Host(`localhost`)"
-  #     - "traefik.http.routers.server.entrypoints=web"
-  #     - "traefik.http.services.server.loadbalancer.server.port=8090"
+  server:
+    image: ghcr.io/faterium/faterium-server:latest
+    command: serve --http=0.0.0.0:8090
+    volumes:
+      - ../data:/data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.server.rule=Host(`api.localhost`)"
+      - "traefik.http.routers.server.entrypoints=web"
+      - "traefik.http.services.server.loadbalancer.server.port=8090"
 
   node:
     image: ghcr.io/faterium/faterium-node:latest
     command: --dev
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.node.rule=Host(`localhost`)"
+      - "traefik.http.routers.node.rule=Host(`node.localhost`)"
       - "traefik.http.routers.node.entrypoints=web"
       - "traefik.http.services.node.loadbalancer.server.port=8090"

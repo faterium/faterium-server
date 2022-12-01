@@ -12,7 +12,7 @@ COPY core core
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix nocgo -o /release ./cmd/main.go
 
 # Final stage
-FROM scratch
+FROM alpine
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=builder /release .
 ENTRYPOINT ["/release"]
