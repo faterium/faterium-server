@@ -9,17 +9,15 @@ services:
   reverse-proxy:
     image: traefik:v2.8
     command:
-      - "--providers.docker"
-      - "--providers.docker.exposedByDefault=false"
-      - "--entrypoints.web.address=:80"
-      # enables web ui on :8080
-      - "--api.insecure=true"
+      - --providers.docker
+      - --providers.docker.exposedByDefault=false
+      - --entrypoints.web.address=:80
     ports:
-      - "80:80"
-      - "443:443"
+      - 80:80
+      - 443:443
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      # The acme.json file is required by Let's Encrypt
+      # the acme.json file is required by Let's Encrypt
       - ./acme.json:/etc/traefik/acme/acme.json
 
   server:
@@ -28,16 +26,22 @@ services:
     volumes:
       - ../data:/data
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.server.rule=Host(`api.localhost`)"
-      - "traefik.http.routers.server.entrypoints=web"
-      - "traefik.http.services.server.loadbalancer.server.port=8090"
+      - traefik.enable=true
+      - traefik.http.routers.server.rule=Host(`dapi.faterium.com`) || Host(`localhost`)
+      - traefik.http.routers.server.entrypoints=web
+      # backend port
+      - traefik.http.services.server.loadbalancer.server.port=8090
 
   node:
     image: ghcr.io/faterium/faterium-node:latest
-    command: --dev
+    command:
+      - --dev
+      - --ws-external
+      - --rpc-external
+      - --rpc-cors=all
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.node.rule=Host(`node.localhost`)"
-      - "traefik.http.routers.node.entrypoints=web"
-      - "traefik.http.services.node.loadbalancer.server.port=8090"
+      - traefik.enable=true
+      - traefik.http.routers.node.rule=(Host(`dapi.faterium.com`) && Path(`/wss`)) || (Host(`localhost`) && Path(`/wss`))
+      - traefik.http.routers.node.entrypoints=web
+      # backend port
+      - traefik.http.services.node.loadbalancer.server.port=9944

@@ -15,4 +15,5 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix nocgo -o /release ./cmd/
 FROM alpine
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=builder /release .
+RUN apk add dbus avahi avahi-compat-libdns_sd
 ENTRYPOINT ["/release"]
