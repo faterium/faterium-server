@@ -71,3 +71,20 @@ services:
       - traefik.http.routers.node.tls.certresolver=letsencrypt
       # backend port
       - traefik.http.services.node.loadbalancer.server.port=9944
+
+  apps:
+    image: jacogr/polkadot-js-apps
+    environment:
+      - WS_URL=wss://dapi.faterium.com/wss
+    labels:
+      - traefik.enable=true
+      # http
+      - traefik.http.routers.node-http.entrypoints=web
+      - traefik.http.routers.node-http.rule=Host(`localhost`) && Path(`/apps`)
+      # https
+      - traefik.http.routers.node.entrypoints=websecure
+      - traefik.http.routers.node.rule=Host(`dapi.faterium.com`) && Path(`/apps`)
+      - traefik.http.routers.node.tls=true
+      - traefik.http.routers.node.tls.certresolver=letsencrypt
+      # backend port
+      - traefik.http.services.node.loadbalancer.server.port=80
