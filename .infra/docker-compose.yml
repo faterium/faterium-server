@@ -43,7 +43,7 @@ services:
       - traefik.http.routers.server-http.rule=Host(`localhost`)
       # https
       - traefik.http.routers.server.entrypoints=websecure
-      - traefik.http.routers.server.rule=Host(`dapi.faterium.com`)
+      - traefik.http.routers.server.rule=Host(`dapp-api.faterium.com`)
       - traefik.http.routers.server.tls=true
       - traefik.http.routers.server.tls.certresolver=letsencrypt
       # backend port
@@ -63,10 +63,10 @@ services:
       - traefik.enable=true
       # http
       - traefik.http.routers.node-http.entrypoints=web
-      - traefik.http.routers.node-http.rule=Host(`localhost`) && Path(`/ws`)
+      - traefik.http.routers.node-http.rule=Host(`node.localhost`)
       # https
       - traefik.http.routers.node.entrypoints=websecure
-      - traefik.http.routers.node.rule=Host(`dapi.faterium.com`) && Path(`/wss`)
+      - traefik.http.routers.node.rule=Host(`dapp-node.faterium.com`)
       - traefik.http.routers.node.tls=true
       - traefik.http.routers.node.tls.certresolver=letsencrypt
       # backend port
@@ -75,15 +75,15 @@ services:
   apps:
     image: jacogr/polkadot-js-apps:latest
     environment:
-      - WS_URL=wss://dapi.faterium.com/wss
+      - WS_URL=wss://dapp-node.faterium.com
     labels:
       - traefik.enable=true
       # http
       - traefik.http.routers.apps-http.entrypoints=web
-      - traefik.http.routers.apps-http.rule=Host(`dapps.localhost`)
+      - traefik.http.routers.apps-http.rule=Host(`apps.localhost`)
       # https
       - traefik.http.routers.apps.entrypoints=websecure
-      - traefik.http.routers.apps.rule=Host(`dapps.faterium.com`)
+      - traefik.http.routers.apps.rule=Host(`dapp-apps.faterium.com`)
       - traefik.http.routers.apps.tls=true
       - traefik.http.routers.apps.tls.certresolver=letsencrypt
       # backend port
