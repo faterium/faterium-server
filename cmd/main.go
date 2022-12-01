@@ -73,7 +73,7 @@ func launchPocketBase(app *fateCore.App) error {
 			return err
 		}
 		// Update Record cid field with the actual IPFS CID of the file
-		e.Record.SetDataValue("cid", res.Cid().String())
+		e.Record.Set("cid", res.Cid().String())
 		return nil
 	})
 	pbApp.RootCmd.AddCommand(&cobra.Command{
