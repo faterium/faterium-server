@@ -96,7 +96,6 @@ func CreateNode(ctx context.Context, repoPath string) (*core.IpfsNode, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	// Construct the node
 	nodeOptions := &core.BuildCfg{
 		Online:  true,
@@ -104,7 +103,6 @@ func CreateNode(ctx context.Context, repoPath string) (*core.IpfsNode, error) {
 		// Routing: libp2p.DHTClientOption, // This option sets the node to be a client DHT node (only fetching records)
 		Repo: repo,
 	}
-
 	return core.NewNode(ctx, nodeOptions)
 }
 
@@ -177,12 +175,10 @@ func GetUnixfsNode(path string) (files.Node, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	f, err := files.NewSerialFile(path, false, st)
 	if err != nil {
 		return nil, err
 	}
-
 	return f, nil
 }
 

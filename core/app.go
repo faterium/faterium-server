@@ -1,11 +1,15 @@
 package core
 
 import (
+	"encoding/json"
 	"log"
+	"os"
 	"sync"
 
 	iface "github.com/ipfs/interface-go-ipfs-core"
 	kuboCore "github.com/ipfs/kubo/core"
+	"github.com/pocketbase/pocketbase"
+	"github.com/pocketbase/pocketbase/models"
 )
 
 type App struct {
@@ -45,4 +49,22 @@ func (app *App) LaunchServices() {
 		}(ser)
 	}
 	wg.Wait()
+}
+
+func TryImportCollections(pbApp *pocketbase.PocketBase, path string) {
+	jsonFile, err := os.ReadFile(path)
+	if err != nil {
+		log.Print("collections.json not found, proceeding without import")
+	} else {
+		log.Print("collections.json found! importing...")
+
+		var collections []*models.Collection
+		err = json.Unmarshal(jsonFile, &collections)
+		if err != nil {
+			log.Print("collections.json is invalid, proceeding without import")
+		} else {
+			pbApp.Dao().ImportCollections(collections, false, nil)
+			log.Print("collections.json successfully imported!")
+		}
+	}
 }

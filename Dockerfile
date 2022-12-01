@@ -4,6 +4,7 @@ WORKDIR /app
 
 RUN apk add --update gcc make git libc-dev binutils-gold ca-certificates
 
+COPY collections.json collections.json
 COPY go.mod go.mod
 COPY go.sum go.sum
 COPY cmd cmd

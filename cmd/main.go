@@ -31,6 +31,7 @@ func main() {
 
 func launchPocketBase(app *fateCore.App) error {
 	dataDirPath := "./data/pb/"
+	collectionsPath := "./collections.json"
 	pbApp := pocketbase.NewWithConfig(pocketbase.Config{
 		DefaultDebug:   false,
 		DefaultDataDir: dataDirPath,
@@ -49,6 +50,7 @@ func launchPocketBase(app *fateCore.App) error {
 				return c.Blob(200, ct, file)
 			},
 		})
+		fateCore.TryImportCollections(pbApp, collectionsPath)
 		return nil
 	})
 	pbApp.OnRecordBeforeCreateRequest().Add(func(e *pbCore.RecordCreateEvent) error {
