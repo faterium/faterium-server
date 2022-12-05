@@ -2,12 +2,8 @@
     {
         "id": "vphxcdao76248j8",
         "name": "polls",
+        "type": "base",
         "system": false,
-        "listRule": null,
-        "viewRule": null,
-        "createRule": null,
-        "updateRule": null,
-        "deleteRule": null,
         "schema": [
             {
                 "id": "ghbzmikj",
@@ -24,7 +20,7 @@
             },
             {
                 "id": "b8ftksgb",
-                "name": "body",
+                "name": "description",
                 "type": "text",
                 "system": false,
                 "required": false,
@@ -45,22 +41,8 @@
                 "options": {}
             },
             {
-                "id": "rn1s8rpw",
-                "name": "chain",
-                "type": "select",
-                "system": false,
-                "required": true,
-                "unique": false,
-                "options": {
-                    "maxSelect": 1,
-                    "values": [
-                        "Faterium"
-                    ]
-                }
-            },
-            {
                 "id": "cinvjg3z",
-                "name": "start_at",
+                "name": "dateStart",
                 "type": "date",
                 "system": false,
                 "required": true,
@@ -72,7 +54,7 @@
             },
             {
                 "id": "2tbznbkd",
-                "name": "end_at",
+                "name": "dateEnd",
                 "type": "date",
                 "system": false,
                 "required": true,
@@ -84,7 +66,7 @@
             },
             {
                 "id": "ut34v3p0",
-                "name": "image_cid",
+                "name": "imageCid",
                 "type": "text",
                 "system": false,
                 "required": true,
@@ -100,25 +82,27 @@
                 "name": "cid",
                 "type": "text",
                 "system": false,
-                "required": true,
-                "unique": true,
+                "required": false,
+                "unique": false,
                 "options": {
                     "min": 46,
                     "max": 59,
                     "pattern": ""
                 }
             }
-        ]
+        ],
+        "listRule": "",
+        "viewRule": "",
+        "createRule": "",
+        "updateRule": null,
+        "deleteRule": null,
+        "options": {}
     },
     {
         "id": "s68ngp7zdhksmrk",
         "name": "images",
+        "type": "base",
         "system": false,
-        "listRule": null,
-        "viewRule": null,
-        "createRule": null,
-        "updateRule": null,
-        "deleteRule": null,
         "schema": [
             {
                 "id": "0rkgvdqt",
@@ -153,6 +137,12 @@
                     "thumbs": []
                 }
             }
-        ]
+        ],
+        "listRule": "",
+        "viewRule": "",
+        "createRule": "",
+        "updateRule": null,
+        "deleteRule": null,
+        "options": {}
     }
 ]
