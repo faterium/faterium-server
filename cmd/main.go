@@ -54,8 +54,8 @@ func launchPocketBase(app *fateCore.App) error {
 		return nil
 	})
 	pbApp.OnRecordBeforeCreateRequest().Add(func(e *pbCore.RecordCreateEvent) error {
-		collectionName := e.Record.Collection().Name
-		if collectionName != "images" {
+		collection := e.Record.Collection()
+		if collection.Name != "images" {
 			return nil
 		}
 		form, err := e.HttpContext.MultipartForm()
@@ -74,8 +74,13 @@ func launchPocketBase(app *fateCore.App) error {
 		if err != nil {
 			return err
 		}
+		cid := res.Cid().String()
+		foundRecord, _ := pbApp.Dao().FindFirstRecordByData(collection.Id, "cid", cid)
+		if foundRecord != nil {
+			return fmt.Errorf("uploaded file already exists")
+		}
 		// Update Record cid field with the actual IPFS CID of the file
-		e.Record.Set("cid", res.Cid().String())
+		e.Record.Set("cid", cid)
 		return nil
 	})
 	pbApp.RootCmd.AddCommand(&cobra.Command{
