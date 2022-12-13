@@ -35,7 +35,7 @@ services:
     image: ghcr.io/faterium/faterium-server:latest
     command: serve --http=0.0.0.0:8090
     volumes:
-      - ../data:/data
+      - ../../data:/data
     labels:
       - traefik.enable=true
       # http
@@ -58,7 +58,7 @@ services:
       - --rpc-cors=all
       - --base-path=/data/
     volumes:
-      - ../data:/data
+      - ../../data:/data
     labels:
       - traefik.enable=true
       # http

@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  server:
+    build:
+      context: ../../
+    command: serve --http=0.0.0.0:8090
+    ports:
+      - "8090:8090"
+    volumes:
+      - ../../data:/data
+
+  node:
+    image: ghcr.io/faterium/faterium-node:latest
+    command:
+      - --dev
+      - --ws-external
+      - --rpc-external
+      - --rpc-cors=all
+      - --base-path=/data/
+    ports:
+      - "9944:9944"
+    volumes:
+      - ../../data:/data
+
+  apps:
+    image: jacogr/polkadot-js-apps:latest
+    environment:
+      - WS_URL=ws://127.0.0.1:9944
+    ports:
+      - "8000:80"
