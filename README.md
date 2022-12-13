@@ -38,3 +38,7 @@ docker-compose down
 ```
 
 If you want to clean up the blocks and server data - delete `./data` folder.
+
+## Dedicated testnet server
+
+If you want to run all these services on the dedicated server and behind `https://` and `wss://` - feel free to use our setup from `infra/testnet` folder. It's almost the same as the local setup but it uses [traefik reverse-proxy](https://traefik.io/) to setup services on our `dapp-*.faterium.com` subdomains (you can change them in `docker-compose.yml` file) and `SSL/TLS` encryption. Feel free to read its [docs](https://doc.traefik.io/traefik/) and our `docker-compose.yml` in the `infra/testnet` folder.
