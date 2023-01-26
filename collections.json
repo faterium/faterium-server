@@ -101,6 +101,19 @@
                     "min": 0,
                     "max": null
                 }
+            },
+            {
+                "id": "ardqnztt",
+                "name": "community",
+                "type": "relation",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "maxSelect": 1,
+                    "collectionId": "7bn7qxp1i7mk9oh",
+                    "cascadeDelete": false
+                }
             }
         ],
         "listRule": "",
@@ -149,6 +162,354 @@
                     "thumbs": [
                         "120x80"
                     ]
+                }
+            }
+        ],
+        "listRule": "",
+        "viewRule": "",
+        "createRule": "",
+        "updateRule": null,
+        "deleteRule": null,
+        "options": {}
+    },
+    {
+        "id": "7bn7qxp1i7mk9oh",
+        "name": "communities",
+        "type": "base",
+        "system": false,
+        "schema": [
+            {
+                "id": "3hlvrby3",
+                "name": "name",
+                "type": "text",
+                "system": false,
+                "required": true,
+                "unique": true,
+                "options": {
+                    "min": 2,
+                    "max": 20,
+                    "pattern": "^[a-zA-Z0-9_]+(?:-[a-zA-Z0-9]+)*$"
+                }
+            },
+            {
+                "id": "hq2o9339",
+                "name": "displayName",
+                "type": "text",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "min": 3,
+                    "max": 40,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "z3lrtz94",
+                "name": "description",
+                "type": "text",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": null,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "iuqexaet",
+                "name": "logoImage",
+                "type": "file",
+                "system": false,
+                "required": true,
+                "unique": false,
+                "options": {
+                    "maxSelect": 1,
+                    "maxSize": 5242880,
+                    "mimeTypes": [
+                        "image/jpg",
+                        "image/jpeg",
+                        "image/png",
+                        "image/svg+xml",
+                        "image/gif"
+                    ],
+                    "thumbs": []
+                }
+            },
+            {
+                "id": "ntpsly7z",
+                "name": "bannerImage",
+                "type": "file",
+                "system": false,
+                "required": true,
+                "unique": false,
+                "options": {
+                    "maxSelect": 1,
+                    "maxSize": 5242880,
+                    "mimeTypes": [],
+                    "thumbs": []
+                }
+            },
+            {
+                "id": "ern6y0gh",
+                "name": "featuredImage",
+                "type": "file",
+                "system": false,
+                "required": true,
+                "unique": false,
+                "options": {
+                    "maxSelect": 1,
+                    "maxSize": 5242880,
+                    "mimeTypes": [
+                        "image/jpg",
+                        "image/jpeg",
+                        "image/png",
+                        "image/svg+xml",
+                        "image/gif"
+                    ],
+                    "thumbs": []
+                }
+            },
+            {
+                "id": "qiyvnyyf",
+                "name": "linkTwitter",
+                "type": "url",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "exceptDomains": [],
+                    "onlyDomains": [
+                        "twitter.com",
+                        "www.twitter.com"
+                    ]
+                }
+            },
+            {
+                "id": "4s8e3wgu",
+                "name": "linkDiscord",
+                "type": "url",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "exceptDomains": null,
+                    "onlyDomains": [
+                        "discord.com",
+                        "discord.gg",
+                        "www.discord.gg",
+                        "www.discord.com"
+                    ]
+                }
+            },
+            {
+                "id": "u6cacep6",
+                "name": "linkYoutube",
+                "type": "url",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "exceptDomains": null,
+                    "onlyDomains": [
+                        "youtube.com",
+                        "www.youtube.com"
+                    ]
+                }
+            },
+            {
+                "id": "0bvsavdk",
+                "name": "linkInstagram",
+                "type": "url",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "exceptDomains": null,
+                    "onlyDomains": [
+                        "instagram.com",
+                        "www.instagram.com"
+                    ]
+                }
+            },
+            {
+                "id": "yewgtzcn",
+                "name": "linkWebpage",
+                "type": "url",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "exceptDomains": [],
+                    "onlyDomains": []
+                }
+            },
+            {
+                "id": "d2xyin2b",
+                "name": "category",
+                "type": "relation",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "maxSelect": 1,
+                    "collectionId": "6gt4cb0af9h6k28",
+                    "cascadeDelete": false
+                }
+            },
+            {
+                "id": "bdb3mkkl",
+                "name": "isUser",
+                "type": "bool",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {}
+            },
+            {
+                "id": "q1o035o1",
+                "name": "team",
+                "type": "relation",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "maxSelect": 5,
+                    "collectionId": "7bn7qxp1i7mk9oh",
+                    "cascadeDelete": false
+                }
+            }
+        ],
+        "listRule": "",
+        "viewRule": "",
+        "createRule": "",
+        "updateRule": "",
+        "deleteRule": "",
+        "options": {}
+    },
+    {
+        "id": "6gt4cb0af9h6k28",
+        "name": "categories",
+        "type": "base",
+        "system": false,
+        "schema": [
+            {
+                "id": "xzts160m",
+                "name": "name",
+                "type": "text",
+                "system": false,
+                "required": true,
+                "unique": true,
+                "options": {
+                    "min": 1,
+                    "max": 14,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "dsjwtle5",
+                "name": "description",
+                "type": "text",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "min": null,
+                    "max": 100,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "xdnr1cie",
+                "name": "image",
+                "type": "file",
+                "system": false,
+                "required": false,
+                "unique": false,
+                "options": {
+                    "maxSelect": 1,
+                    "maxSize": 5242880,
+                    "mimeTypes": [
+                        "image/jpg",
+                        "image/jpeg",
+                        "image/png",
+                        "image/svg+xml",
+                        "image/gif"
+                    ],
+                    "thumbs": []
+                }
+            }
+        ],
+        "listRule": "",
+        "viewRule": "",
+        "createRule": null,
+        "updateRule": null,
+        "deleteRule": null,
+        "options": {}
+    },
+    {
+        "id": "u60xpwam32zgb55",
+        "name": "assets",
+        "type": "base",
+        "system": false,
+        "schema": [
+            {
+                "id": "1qxbwr4p",
+                "name": "name",
+                "type": "text",
+                "system": false,
+                "required": true,
+                "unique": false,
+                "options": {
+                    "min": 1,
+                    "max": 100,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "hlqzwoa1",
+                "name": "symbol",
+                "type": "text",
+                "system": false,
+                "required": true,
+                "unique": false,
+                "options": {
+                    "min": 1,
+                    "max": 20,
+                    "pattern": ""
+                }
+            },
+            {
+                "id": "w222fyef",
+                "name": "assetId",
+                "type": "number",
+                "system": false,
+                "required": true,
+                "unique": false,
+                "options": {
+                    "min": 0,
+                    "max": null
+                }
+            },
+            {
+                "id": "l5raus60",
+                "name": "icon",
+                "type": "file",
+                "system": false,
+                "required": true,
+                "unique": false,
+                "options": {
+                    "maxSelect": 1,
+                    "maxSize": 5242880,
+                    "mimeTypes": [
+                        "image/jpg",
+                        "image/jpeg",
+                        "image/png",
+                        "image/svg+xml",
+                        "image/gif"
+                    ],
+                    "thumbs": []
                 }
             }
         ],
