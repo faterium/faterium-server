@@ -6,7 +6,7 @@ services:
       context: ../../
     command: serve --http=0.0.0.0:8090
     ports:
-      - "8090:8090"
+      - "127.0.0.1:8090:8090"
     volumes:
       - ../../data:/data
 
@@ -19,7 +19,7 @@ services:
       - --rpc-cors=all
       - --base-path=/data/
     ports:
-      - "9944:9944"
+      - "127.0.0.1:9944:9944"
     volumes:
       - ../../data:/data
 
@@ -28,4 +28,4 @@ services:
     environment:
       - WS_URL=ws://127.0.0.1:9944
     ports:
-      - "8000:80"
+      - "127.0.0.1:8000:80"

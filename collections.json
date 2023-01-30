@@ -425,7 +425,7 @@
                 "name": "image",
                 "type": "file",
                 "system": false,
-                "required": false,
+                "required": true,
                 "unique": false,
                 "options": {
                     "maxSelect": 1,
@@ -443,7 +443,7 @@
         ],
         "listRule": "",
         "viewRule": "",
-        "createRule": null,
+        "createRule": "",
         "updateRule": null,
         "deleteRule": null,
         "options": {}

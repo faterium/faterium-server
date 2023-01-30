@@ -21,7 +21,13 @@ go run ./cmd/main.go serve
 
 There're currently two infrastructure setups for `faterium-dapp` server: `local` and `testnet`. We recommend to start with `local` to see how to launch server, node, and polkadot-apps locally.
 
-To launch local docker containers - just run the following command:
+To launch local docker containers - run the following command to change directory for `local` setup:
+
+```sh
+cd ./infra/local/
+```
+
+And run the following command to speed up containers for `server`, `node`, and `polkadot-apps`:
 
 ```sh
 docker-compose up
