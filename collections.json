@@ -107,7 +107,7 @@
                 "name": "community",
                 "type": "relation",
                 "system": false,
-                "required": false,
+                "required": true,
                 "unique": false,
                 "options": {
                     "maxSelect": 1,
@@ -350,7 +350,7 @@
                 "name": "category",
                 "type": "relation",
                 "system": false,
-                "required": false,
+                "required": true,
                 "unique": false,
                 "options": {
                     "maxSelect": 1,
