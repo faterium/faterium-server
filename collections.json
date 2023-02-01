@@ -350,7 +350,7 @@
                 "name": "category",
                 "type": "relation",
                 "system": false,
-                "required": true,
+                "required": false,
                 "unique": false,
                 "options": {
                     "maxSelect": 1,
